@@ -1,0 +1,25 @@
+{
+  "name": "zork-ts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zork I (Microsoft MIT-licensed ZIL, compiled) running on a TypeScript Z-machine interpreter, in the terminal (bun) and browser (vite).",
+  "license": "MIT",
+  "scripts": {
+    "play": "bun cli/zork.mjs",
+    "dev": "cd web && vite",
+    "build": "cd web && vite build",
+    "preview": "cd web && vite preview --host --port 4173",
+    "prebuild": "node -e \"require('fs').copyFileSync('node_modules/glkote-term/src/glkapi.js','web/public/glkapi.js')\"",
+    "predev": "node -e \"require('fs').copyFileSync('node_modules/glkote-term/src/glkapi.js','web/public/glkapi.js')\""
+  },
+  "dependencies": {
+    "glkote-term": "^0.4.4",
+    "ifvms": "^1.1.6",
+    "mute-stream": "^4.0.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1",
+    "vite": "^8.1.5"
+  }
+}
