@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zork I — The Great Underground Empire</title>
+    <meta name="description" content="Zork I running in your browser: Microsoft's MIT-licensed compiled ZIL on a TypeScript Z-machine interpreter." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🗝️</text></svg>" />
+    <!-- glkapi.js is a legacy browser library full of implicit globals; it must
+         run in classic (sloppy-mode) script scope, where it defines window.Glk.
+         Loaded here (before the module) rather than bundled. -->
+    <script src="glkapi.js"></script>
+    <script type="module" crossorigin src="/zork/assets/index-BgleZww_.js"></script>
+    <link rel="stylesheet" crossorigin href="/zork/assets/index-BVJTjp7t.css">
+  </head>
+  <body>
+    <div id="screen">
+      <div id="status">Zork I</div>
+      <div id="scroll">
+        <div id="buffer"></div>
+      </div>
+      <div id="inputline">
+        <span id="prompt">&gt;</span>
+        <input id="cmd" type="text" autocomplete="off" autocorrect="off"
+               autocapitalize="off" spellcheck="false" disabled />
+      </div>
+    </div>
+  </body>
+</html>

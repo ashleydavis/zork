@@ -1,4 +1,9 @@
-name: Deploy to GitHub Pages
+name: Build and publish to docs/ (GitHub Pages)
+
+# GitHub Pages is configured as "Deploy from a branch" using the /docs folder.
+# This workflow rebuilds the Vite app into docs/ and commits it on push, so the
+# published site always matches the source. Pushes made with GITHUB_TOKEN do not
+# retrigger workflows, so this does not loop.
 
 on:
   push:
@@ -6,15 +11,15 @@ on:
       - claude/zork-typescript-impl-ugpsyr
       - main
       - master
+    paths-ignore:
+      - 'docs/**'
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
+  group: build-docs
   cancel-in-progress: true
 
 jobs:
@@ -32,28 +37,19 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Build web app
+      - name: Build web app into docs/
         run: bun run build
         env:
           VITE_BASE: /zork/
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: web/dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Commit updated docs/
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain docs)" ]; then
+            git add docs
+            git commit -m "Build: publish web app to docs/ [skip ci]"
+            git push
+          else
+            echo "docs/ already up to date"
+          fi
