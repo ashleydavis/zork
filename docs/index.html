@@ -10,20 +10,27 @@
          run in classic (sloppy-mode) script scope, where it defines window.Glk.
          Loaded here (before the module) rather than bundled. -->
     <script src="glkapi.js"></script>
-    <script type="module" crossorigin src="/zork/assets/index-BgleZww_.js"></script>
-    <link rel="stylesheet" crossorigin href="/zork/assets/index-BVJTjp7t.css">
+    <script type="module" crossorigin src="/zork/assets/index-BYecGnsv.js"></script>
+    <link rel="stylesheet" crossorigin href="/zork/assets/index-oDlPewhS.css">
   </head>
   <body>
-    <div id="screen">
-      <div id="status">Zork I</div>
-      <div id="scroll">
-        <div id="buffer"></div>
+    <div id="app">
+      <div id="screen">
+        <div id="status">Zork I</div>
+        <div id="scroll">
+          <div id="buffer"></div>
+        </div>
+        <div id="inputline">
+          <span id="prompt">&gt;</span>
+          <input id="cmd" type="text" autocomplete="off" autocorrect="off"
+                 autocapitalize="off" spellcheck="false" disabled />
+        </div>
+        <div id="buttonbar"></div>
       </div>
-      <div id="inputline">
-        <span id="prompt">&gt;</span>
-        <input id="cmd" type="text" autocomplete="off" autocorrect="off"
-               autocapitalize="off" spellcheck="false" disabled />
-      </div>
+      <aside id="mappanel">
+        <div id="maptitle">MAP <span id="maphint">— explored areas</span></div>
+        <div id="mapscroll"><svg id="map" xmlns="http://www.w3.org/2000/svg"></svg></div>
+      </aside>
     </div>
   </body>
 </html>

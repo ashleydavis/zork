@@ -6,6 +6,7 @@
 import ZVM from 'ifvms/src/zvm.js'
 import WebGlkOte from './web-glkote.js'
 import WebDialog from './web-dialog.js'
+import GameUI from './game-ui.js'
 import './style.css'
 
 // glkapi.js is loaded as a classic script in index.html (it relies on sloppy
@@ -33,6 +34,26 @@ async function boot() {
   }
 
   const glkote = new WebGlkOte(dom)
+
+  // Companion UI (fog-of-war map + button bar). Best-effort: if the map data
+  // fails to load, the game still runs fine on its own.
+  try {
+    const mapResp = await fetch(import.meta.env.BASE_URL + 'map.json')
+    if (mapResp.ok) {
+      const map = await mapResp.json()
+      const ui = new GameUI({
+        map,
+        svg: document.getElementById('map'),
+        buttons: document.getElementById('buttonbar'),
+        input: dom.input,
+      })
+      glkote.onCommand = (t) => ui.handleCommand(t)
+      glkote.onStatus = (l) => ui.handleStatus(l)
+    }
+  } catch (err) {
+    console.warn('Automap disabled:', err)
+  }
+
   const vm = new ZVM()
   const options = { vm, Dialog: WebDialog, Glk, GlkOte: glkote }
 

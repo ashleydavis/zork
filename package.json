@@ -10,9 +10,9 @@
     "dev": "cd web && vite",
     "build": "cd web && vite build",
     "preview": "cd web && vite preview --host --port 4173",
-    "prebuild": "node -e \"require('fs').copyFileSync('node_modules/glkote-term/src/glkapi.js','web/public/glkapi.js')\"",
-    "predev": "node -e \"require('fs').copyFileSync('node_modules/glkote-term/src/glkapi.js','web/public/glkapi.js')\"",
-    "map": "bun tools/zil-to-yaml.mjs tools/1dungeon.zil > data/map.yaml"
+    "prebuild": "node -e \"const f=require('fs');f.copyFileSync('node_modules/glkote-term/src/glkapi.js','web/public/glkapi.js');f.copyFileSync('data/map.json','web/public/map.json')\"",
+    "predev": "node -e \"const f=require('fs');f.copyFileSync('node_modules/glkote-term/src/glkapi.js','web/public/glkapi.js');f.copyFileSync('data/map.json','web/public/map.json')\"",
+    "map": "bun tools/zil-to-yaml.mjs tools/1dungeon.zil"
   },
   "dependencies": {
     "glkote-term": "^0.4.4",

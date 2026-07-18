@@ -214,10 +214,28 @@ function emit(rooms) {
   return L.join('\n') + '\n'
 }
 
+function toJSON(rooms) {
+  const out = { start: 'WEST-OF-HOUSE', rooms: {} }
+  for (const r of rooms) {
+    out.rooms[r.id] = {
+      desc: r.desc,
+      action: r.action || undefined,
+      flags: r.flags,
+      globals: r.globals,
+      exits: r.exits,
+    }
+  }
+  return out
+}
+
 // ---- main ------------------------------------------------------------------
 
 const infile = process.argv[2] || 'tools/1dungeon.zil'
 const src = fs.readFileSync(infile, 'utf8')
 const rooms = extractRooms(parse(src))
-process.stderr.write(`parsed ${rooms.length} rooms, ${rooms.reduce((n, r) => n + r.exits.length, 0)} exits\n`)
-process.stdout.write(emit(rooms))
+const exitCount = rooms.reduce((n, r) => n + r.exits.length, 0)
+
+fs.mkdirSync('data', { recursive: true })
+fs.writeFileSync('data/map.yaml', emit(rooms))
+fs.writeFileSync('data/map.json', JSON.stringify(toJSON(rooms), null, 2) + '\n')
+process.stderr.write(`parsed ${rooms.length} rooms, ${exitCount} exits -> data/map.yaml, data/map.json\n`)

@@ -80,6 +80,28 @@ The web front-end is a self-contained "glass terminal": a status line (the
 Z-machine *grid* window), a scrolling transcript (the *buffer* window), and a
 command input. Save/Restore work in-browser via `localStorage`.
 
+It also has two companion features (browser only — the terminal is untouched):
+
+- **Fog-of-war automap** (right panel) — rooms are drawn as you visit them, with
+  adjacent-but-unexplored rooms shown as dim "?" fog nodes. Current room glows.
+  Driven by the status line + your movement commands, resolved against
+  `data/map.json` (see below).
+- **Button bar** (below the input) — one button per available exit from the
+  current room, plus Look / Inventory. Buttons just submit commands; typing
+  still works exactly as before.
+
+## The map (`data/map.yaml` / `data/map.json`)
+
+`tools/zil-to-yaml.mjs` parses Microsoft's `1dungeon.zil` — the exact ZIL our
+`zork1.z3` was compiled from — into a complete map of all **110 rooms** and
+**352 exits**, capturing normal, conditional (`if: WON-FLAG`), door
+(`if: "TRAP-DOOR IS OPEN"`), blocked (with message) and routine (`per`) exits,
+plus each room's flags, globals, description and action. Regenerate with:
+
+```sh
+bun run map
+```
+
 ## How the browser front-end works
 
 The interesting glue lives in `web/src`:

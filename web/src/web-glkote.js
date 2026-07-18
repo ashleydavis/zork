@@ -28,6 +28,10 @@ export default class WebGlkOte {
     this.current_input = null // {id, type}
     this._charHandler = null
 
+    // Optional observers (used by the automap + button bar). Assigned by main.
+    this.onCommand = null // (text) => void   when the player submits a line
+    this.onStatus = null // (location) => void when the status line changes
+
     this._wireInput()
   }
 
@@ -111,7 +115,13 @@ export default class WebGlkOte {
       if (ln.line !== 0) return
       parts.push(this._runsToText(ln.content))
     })
-    if (parts.length) this.statusEl.textContent = parts.join('')
+    if (parts.length) {
+      const line = parts.join('')
+      this.statusEl.textContent = line
+      // Location is the left-justified part before the score/turns columns.
+      const loc = line.replace(/\s{2,}.*$/, '').trim()
+      if (loc && this.onStatus) this.onStatus(loc)
+    }
   }
 
   _renderBuffer(win) {
@@ -185,6 +195,7 @@ export default class WebGlkOte {
         const win = { id: this.current_input.id }
         this.current_input = null
         this._setInputEnabled(false)
+        if (this.onCommand) this.onCommand(text)
         // Note: glkapi echoes the entered line into the buffer window itself,
         // so we must NOT echo it here or the command would appear twice.
         this.send_response('line', win, text)

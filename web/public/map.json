@@ -1,0 +1,2760 @@
+{
+  "start": "WEST-OF-HOUSE",
+  "rooms": {
+    "WEST-OF-HOUSE": {
+      "desc": "West of House",
+      "action": "WEST-HOUSE",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "WHITE-HOUSE",
+        "BOARD",
+        "FOREST"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "NORTH-OF-HOUSE"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "SOUTH-OF-HOUSE"
+        },
+        {
+          "dir": "NE",
+          "to": "NORTH-OF-HOUSE"
+        },
+        {
+          "dir": "SE",
+          "to": "SOUTH-OF-HOUSE"
+        },
+        {
+          "dir": "WEST",
+          "to": "FOREST-1"
+        },
+        {
+          "dir": "EAST",
+          "blocked": "The door is boarded and you can't remove the boards."
+        },
+        {
+          "dir": "SW",
+          "to": "STONE-BARROW",
+          "if": "WON-FLAG"
+        },
+        {
+          "dir": "IN",
+          "to": "STONE-BARROW",
+          "if": "WON-FLAG"
+        }
+      ]
+    },
+    "STONE-BARROW": {
+      "desc": "Stone Barrow",
+      "action": "STONE-BARROW-FCN",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NE",
+          "to": "WEST-OF-HOUSE"
+        }
+      ]
+    },
+    "NORTH-OF-HOUSE": {
+      "desc": "North of House",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "BOARDED-WINDOW",
+        "BOARD",
+        "WHITE-HOUSE",
+        "FOREST"
+      ],
+      "exits": [
+        {
+          "dir": "SW",
+          "to": "WEST-OF-HOUSE"
+        },
+        {
+          "dir": "SE",
+          "to": "EAST-OF-HOUSE"
+        },
+        {
+          "dir": "WEST",
+          "to": "WEST-OF-HOUSE"
+        },
+        {
+          "dir": "EAST",
+          "to": "EAST-OF-HOUSE"
+        },
+        {
+          "dir": "NORTH",
+          "to": "PATH"
+        },
+        {
+          "dir": "SOUTH",
+          "blocked": "The windows are all boarded."
+        }
+      ]
+    },
+    "SOUTH-OF-HOUSE": {
+      "desc": "South of House",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "BOARDED-WINDOW",
+        "BOARD",
+        "WHITE-HOUSE",
+        "FOREST"
+      ],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "WEST-OF-HOUSE"
+        },
+        {
+          "dir": "EAST",
+          "to": "EAST-OF-HOUSE"
+        },
+        {
+          "dir": "NE",
+          "to": "EAST-OF-HOUSE"
+        },
+        {
+          "dir": "NW",
+          "to": "WEST-OF-HOUSE"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "FOREST-3"
+        },
+        {
+          "dir": "NORTH",
+          "blocked": "The windows are all boarded."
+        }
+      ]
+    },
+    "EAST-OF-HOUSE": {
+      "desc": "Behind House",
+      "action": "EAST-HOUSE",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "WHITE-HOUSE",
+        "KITCHEN-WINDOW",
+        "FOREST"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "NORTH-OF-HOUSE"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "SOUTH-OF-HOUSE"
+        },
+        {
+          "dir": "SW",
+          "to": "SOUTH-OF-HOUSE"
+        },
+        {
+          "dir": "NW",
+          "to": "NORTH-OF-HOUSE"
+        },
+        {
+          "dir": "EAST",
+          "to": "CLEARING"
+        },
+        {
+          "dir": "WEST",
+          "to": "KITCHEN",
+          "if": "KITCHEN-WINDOW IS OPEN"
+        },
+        {
+          "dir": "IN",
+          "to": "KITCHEN",
+          "if": "KITCHEN-WINDOW IS OPEN"
+        }
+      ]
+    },
+    "FOREST-1": {
+      "desc": "Forest",
+      "action": "FOREST-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "TREE",
+        "SONGBIRD",
+        "WHITE-HOUSE",
+        "FOREST"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "There is no tree here suitable for climbing."
+        },
+        {
+          "dir": "NORTH",
+          "to": "GRATING-CLEARING"
+        },
+        {
+          "dir": "EAST",
+          "to": "PATH"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "FOREST-3"
+        },
+        {
+          "dir": "WEST",
+          "blocked": "You would need a machete to go further west."
+        }
+      ]
+    },
+    "FOREST-2": {
+      "desc": "Forest",
+      "action": "FOREST-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "TREE",
+        "SONGBIRD",
+        "WHITE-HOUSE",
+        "FOREST"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "There is no tree here suitable for climbing."
+        },
+        {
+          "dir": "NORTH",
+          "blocked": "The forest becomes impenetrable to the north."
+        },
+        {
+          "dir": "EAST",
+          "to": "MOUNTAINS"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "CLEARING"
+        },
+        {
+          "dir": "WEST",
+          "to": "PATH"
+        }
+      ]
+    },
+    "MOUNTAINS": {
+      "desc": "Forest",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "TREE",
+        "WHITE-HOUSE"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "The mountains are impassable."
+        },
+        {
+          "dir": "NORTH",
+          "to": "FOREST-2"
+        },
+        {
+          "dir": "EAST",
+          "blocked": "The mountains are impassable."
+        },
+        {
+          "dir": "SOUTH",
+          "to": "FOREST-2"
+        },
+        {
+          "dir": "WEST",
+          "to": "FOREST-2"
+        }
+      ]
+    },
+    "FOREST-3": {
+      "desc": "Forest",
+      "action": "FOREST-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "TREE",
+        "SONGBIRD",
+        "WHITE-HOUSE",
+        "FOREST"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "There is no tree here suitable for climbing."
+        },
+        {
+          "dir": "NORTH",
+          "to": "CLEARING"
+        },
+        {
+          "dir": "EAST",
+          "blocked": "The rank undergrowth prevents eastward movement."
+        },
+        {
+          "dir": "SOUTH",
+          "blocked": "Storm-tossed trees block your way."
+        },
+        {
+          "dir": "WEST",
+          "to": "FOREST-1"
+        },
+        {
+          "dir": "NW",
+          "to": "SOUTH-OF-HOUSE"
+        }
+      ]
+    },
+    "PATH": {
+      "desc": "Forest Path",
+      "action": "FOREST-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "TREE",
+        "SONGBIRD",
+        "WHITE-HOUSE",
+        "FOREST"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "to": "UP-A-TREE"
+        },
+        {
+          "dir": "NORTH",
+          "to": "GRATING-CLEARING"
+        },
+        {
+          "dir": "EAST",
+          "to": "FOREST-2"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "NORTH-OF-HOUSE"
+        },
+        {
+          "dir": "WEST",
+          "to": "FOREST-1"
+        }
+      ]
+    },
+    "UP-A-TREE": {
+      "desc": "Up a Tree",
+      "action": "TREE-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "TREE",
+        "FOREST",
+        "SONGBIRD",
+        "WHITE-HOUSE"
+      ],
+      "exits": [
+        {
+          "dir": "DOWN",
+          "to": "PATH"
+        },
+        {
+          "dir": "UP",
+          "blocked": "You cannot climb any higher."
+        }
+      ]
+    },
+    "GRATING-CLEARING": {
+      "desc": "Clearing",
+      "action": "CLEARING-FCN",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "WHITE-HOUSE",
+        "GRATE"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "blocked": "The forest becomes impenetrable to the north."
+        },
+        {
+          "dir": "EAST",
+          "to": "FOREST-2"
+        },
+        {
+          "dir": "WEST",
+          "to": "FOREST-1"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "PATH"
+        },
+        {
+          "dir": "DOWN",
+          "per": "GRATING-EXIT"
+        }
+      ]
+    },
+    "CLEARING": {
+      "desc": "Clearing",
+      "action": "FOREST-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "TREE",
+        "SONGBIRD",
+        "WHITE-HOUSE",
+        "FOREST"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "There is no tree here suitable for climbing."
+        },
+        {
+          "dir": "EAST",
+          "to": "CANYON-VIEW"
+        },
+        {
+          "dir": "NORTH",
+          "to": "FOREST-2"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "FOREST-3"
+        },
+        {
+          "dir": "WEST",
+          "to": "EAST-OF-HOUSE"
+        }
+      ]
+    },
+    "KITCHEN": {
+      "desc": "Kitchen",
+      "action": "KITCHEN-FCN",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "KITCHEN-WINDOW",
+        "CHIMNEY",
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "EAST-OF-HOUSE",
+          "if": "KITCHEN-WINDOW IS OPEN"
+        },
+        {
+          "dir": "WEST",
+          "to": "LIVING-ROOM"
+        },
+        {
+          "dir": "OUT",
+          "to": "EAST-OF-HOUSE",
+          "if": "KITCHEN-WINDOW IS OPEN"
+        },
+        {
+          "dir": "UP",
+          "to": "ATTIC"
+        },
+        {
+          "dir": "DOWN",
+          "to": "STUDIO",
+          "if": "FALSE-FLAG",
+          "else": "Only Santa Claus climbs down chimneys."
+        }
+      ]
+    },
+    "ATTIC": {
+      "desc": "Attic",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "DOWN",
+          "to": "KITCHEN"
+        }
+      ]
+    },
+    "LIVING-ROOM": {
+      "desc": "Living Room",
+      "action": "LIVING-ROOM-FCN",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "KITCHEN"
+        },
+        {
+          "dir": "WEST",
+          "to": "STRANGE-PASSAGE",
+          "if": "MAGIC-FLAG",
+          "else": "The door is nailed shut."
+        },
+        {
+          "dir": "DOWN",
+          "per": "TRAP-DOOR-EXIT"
+        }
+      ]
+    },
+    "CELLAR": {
+      "desc": "Cellar",
+      "action": "CELLAR-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "TRAP-DOOR",
+        "SLIDE",
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "TROLL-ROOM"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "EAST-OF-CHASM"
+        },
+        {
+          "dir": "UP",
+          "to": "LIVING-ROOM",
+          "if": "TRAP-DOOR IS OPEN"
+        },
+        {
+          "dir": "WEST",
+          "blocked": "You try to ascend the ramp, but it is impossible, and you slide back down."
+        }
+      ]
+    },
+    "TROLL-ROOM": {
+      "desc": "The Troll Room",
+      "action": "TROLL-ROOM-F",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "CELLAR"
+        },
+        {
+          "dir": "EAST",
+          "to": "EW-PASSAGE",
+          "if": "TROLL-FLAG",
+          "else": "The troll fends you off with a menacing gesture."
+        },
+        {
+          "dir": "WEST",
+          "to": "MAZE-1",
+          "if": "TROLL-FLAG",
+          "else": "The troll fends you off with a menacing gesture."
+        }
+      ]
+    },
+    "EAST-OF-CHASM": {
+      "desc": "East of Chasm",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "CELLAR"
+        },
+        {
+          "dir": "EAST",
+          "to": "GALLERY"
+        },
+        {
+          "dir": "DOWN",
+          "blocked": "The chasm probably leads straight to the infernal regions."
+        }
+      ]
+    },
+    "GALLERY": {
+      "desc": "Gallery",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "EAST-OF-CHASM"
+        },
+        {
+          "dir": "NORTH",
+          "to": "STUDIO"
+        }
+      ]
+    },
+    "STUDIO": {
+      "desc": "Studio",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "CHIMNEY"
+      ],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "GALLERY"
+        },
+        {
+          "dir": "UP",
+          "per": "UP-CHIMNEY-FUNCTION"
+        }
+      ]
+    },
+    "MAZE-1": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "TROLL-ROOM"
+        },
+        {
+          "dir": "NORTH",
+          "to": "MAZE-1"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "MAZE-2"
+        },
+        {
+          "dir": "WEST",
+          "to": "MAZE-4"
+        }
+      ]
+    },
+    "MAZE-2": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "MAZE-1"
+        },
+        {
+          "dir": "DOWN",
+          "per": "MAZE-DIODES"
+        },
+        {
+          "dir": "EAST",
+          "to": "MAZE-3"
+        }
+      ]
+    },
+    "MAZE-3": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "MAZE-2"
+        },
+        {
+          "dir": "NORTH",
+          "to": "MAZE-4"
+        },
+        {
+          "dir": "UP",
+          "to": "MAZE-5"
+        }
+      ]
+    },
+    "MAZE-4": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "MAZE-3"
+        },
+        {
+          "dir": "NORTH",
+          "to": "MAZE-1"
+        },
+        {
+          "dir": "EAST",
+          "to": "DEAD-END-1"
+        }
+      ]
+    },
+    "DEAD-END-1": {
+      "desc": "Dead End",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "MAZE-4"
+        }
+      ]
+    },
+    "MAZE-5": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "DEAD-END-2"
+        },
+        {
+          "dir": "NORTH",
+          "to": "MAZE-3"
+        },
+        {
+          "dir": "SW",
+          "to": "MAZE-6"
+        }
+      ]
+    },
+    "DEAD-END-2": {
+      "desc": "Dead End",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "MAZE-5"
+        }
+      ]
+    },
+    "MAZE-6": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "DOWN",
+          "to": "MAZE-5"
+        },
+        {
+          "dir": "EAST",
+          "to": "MAZE-7"
+        },
+        {
+          "dir": "WEST",
+          "to": "MAZE-6"
+        },
+        {
+          "dir": "UP",
+          "to": "MAZE-9"
+        }
+      ]
+    },
+    "MAZE-7": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "UP",
+          "to": "MAZE-14"
+        },
+        {
+          "dir": "WEST",
+          "to": "MAZE-6"
+        },
+        {
+          "dir": "DOWN",
+          "per": "MAZE-DIODES"
+        },
+        {
+          "dir": "EAST",
+          "to": "MAZE-8"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "MAZE-15"
+        }
+      ]
+    },
+    "MAZE-8": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NE",
+          "to": "MAZE-7"
+        },
+        {
+          "dir": "WEST",
+          "to": "MAZE-8"
+        },
+        {
+          "dir": "SE",
+          "to": "DEAD-END-3"
+        }
+      ]
+    },
+    "DEAD-END-3": {
+      "desc": "Dead End",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "MAZE-8"
+        }
+      ]
+    },
+    "MAZE-9": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "MAZE-6"
+        },
+        {
+          "dir": "DOWN",
+          "per": "MAZE-DIODES"
+        },
+        {
+          "dir": "EAST",
+          "to": "MAZE-10"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "MAZE-13"
+        },
+        {
+          "dir": "WEST",
+          "to": "MAZE-12"
+        },
+        {
+          "dir": "NW",
+          "to": "MAZE-9"
+        }
+      ]
+    },
+    "MAZE-10": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "MAZE-9"
+        },
+        {
+          "dir": "WEST",
+          "to": "MAZE-13"
+        },
+        {
+          "dir": "UP",
+          "to": "MAZE-11"
+        }
+      ]
+    },
+    "MAZE-11": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NE",
+          "to": "GRATING-ROOM"
+        },
+        {
+          "dir": "DOWN",
+          "to": "MAZE-10"
+        },
+        {
+          "dir": "NW",
+          "to": "MAZE-13"
+        },
+        {
+          "dir": "SW",
+          "to": "MAZE-12"
+        }
+      ]
+    },
+    "GRATING-ROOM": {
+      "desc": "Grating Room",
+      "action": "MAZE-11-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "GRATE"
+      ],
+      "exits": [
+        {
+          "dir": "SW",
+          "to": "MAZE-11"
+        },
+        {
+          "dir": "UP",
+          "to": "GRATING-CLEARING",
+          "if": "GRATE IS OPEN",
+          "else": "The grating is closed."
+        }
+      ]
+    },
+    "MAZE-12": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "DOWN",
+          "per": "MAZE-DIODES"
+        },
+        {
+          "dir": "SW",
+          "to": "MAZE-11"
+        },
+        {
+          "dir": "EAST",
+          "to": "MAZE-13"
+        },
+        {
+          "dir": "UP",
+          "to": "MAZE-9"
+        },
+        {
+          "dir": "NORTH",
+          "to": "DEAD-END-4"
+        }
+      ]
+    },
+    "DEAD-END-4": {
+      "desc": "Dead End",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "MAZE-12"
+        }
+      ]
+    },
+    "MAZE-13": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "MAZE-9"
+        },
+        {
+          "dir": "DOWN",
+          "to": "MAZE-12"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "MAZE-10"
+        },
+        {
+          "dir": "WEST",
+          "to": "MAZE-11"
+        }
+      ]
+    },
+    "MAZE-14": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "MAZE-15"
+        },
+        {
+          "dir": "NW",
+          "to": "MAZE-14"
+        },
+        {
+          "dir": "NE",
+          "to": "MAZE-7"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "MAZE-7"
+        }
+      ]
+    },
+    "MAZE-15": {
+      "desc": "Maze",
+      "flags": [
+        "RLANDBIT",
+        "MAZEBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "MAZE-14"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "MAZE-7"
+        },
+        {
+          "dir": "SE",
+          "to": "CYCLOPS-ROOM"
+        }
+      ]
+    },
+    "CYCLOPS-ROOM": {
+      "desc": "Cyclops Room",
+      "action": "CYCLOPS-ROOM-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "NW",
+          "to": "MAZE-15"
+        },
+        {
+          "dir": "EAST",
+          "to": "STRANGE-PASSAGE",
+          "if": "MAGIC-FLAG",
+          "else": "The east wall is solid rock."
+        },
+        {
+          "dir": "UP",
+          "to": "TREASURE-ROOM",
+          "if": "CYCLOPS-FLAG",
+          "else": "The cyclops doesn't look like he'll let you past."
+        }
+      ]
+    },
+    "STRANGE-PASSAGE": {
+      "desc": "Strange Passage",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "CYCLOPS-ROOM"
+        },
+        {
+          "dir": "IN",
+          "to": "CYCLOPS-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "LIVING-ROOM"
+        }
+      ]
+    },
+    "TREASURE-ROOM": {
+      "desc": "Treasure Room",
+      "action": "TREASURE-ROOM-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "DOWN",
+          "to": "CYCLOPS-ROOM"
+        }
+      ]
+    },
+    "RESERVOIR-SOUTH": {
+      "desc": "Reservoir South",
+      "action": "RESERVOIR-SOUTH-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER"
+      ],
+      "exits": [
+        {
+          "dir": "SE",
+          "to": "DEEP-CANYON"
+        },
+        {
+          "dir": "SW",
+          "to": "CHASM-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "DAM-ROOM"
+        },
+        {
+          "dir": "WEST",
+          "to": "STREAM-VIEW"
+        },
+        {
+          "dir": "NORTH",
+          "to": "RESERVOIR",
+          "if": "LOW-TIDE",
+          "else": "You would drown."
+        }
+      ]
+    },
+    "RESERVOIR": {
+      "desc": "Reservoir",
+      "action": "RESERVOIR-FCN",
+      "flags": [
+        "NONLANDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "RESERVOIR-NORTH"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "RESERVOIR-SOUTH"
+        },
+        {
+          "dir": "UP",
+          "to": "IN-STREAM"
+        },
+        {
+          "dir": "WEST",
+          "to": "IN-STREAM"
+        },
+        {
+          "dir": "DOWN",
+          "blocked": "The dam blocks your way."
+        }
+      ]
+    },
+    "RESERVOIR-NORTH": {
+      "desc": "Reservoir North",
+      "action": "RESERVOIR-NORTH-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "ATLANTIS-ROOM"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "RESERVOIR",
+          "if": "LOW-TIDE",
+          "else": "You would drown."
+        }
+      ]
+    },
+    "STREAM-VIEW": {
+      "desc": "Stream View",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER"
+      ],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "RESERVOIR-SOUTH"
+        },
+        {
+          "dir": "WEST",
+          "blocked": "The stream emerges from a spot too small for you to enter."
+        }
+      ]
+    },
+    "IN-STREAM": {
+      "desc": "Stream",
+      "flags": [
+        "NONLANDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "The channel is too narrow."
+        },
+        {
+          "dir": "WEST",
+          "blocked": "The channel is too narrow."
+        },
+        {
+          "dir": "LAND",
+          "to": "STREAM-VIEW"
+        },
+        {
+          "dir": "DOWN",
+          "to": "RESERVOIR"
+        },
+        {
+          "dir": "EAST",
+          "to": "RESERVOIR"
+        }
+      ]
+    },
+    "MIRROR-ROOM-1": {
+      "desc": "Mirror Room",
+      "action": "MIRROR-ROOM",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "COLD-PASSAGE"
+        },
+        {
+          "dir": "WEST",
+          "to": "TWISTING-PASSAGE"
+        },
+        {
+          "dir": "EAST",
+          "to": "SMALL-CAVE"
+        }
+      ]
+    },
+    "MIRROR-ROOM-2": {
+      "desc": "Mirror Room",
+      "action": "MIRROR-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "WINDING-PASSAGE"
+        },
+        {
+          "dir": "NORTH",
+          "to": "NARROW-PASSAGE"
+        },
+        {
+          "dir": "EAST",
+          "to": "TINY-CAVE"
+        }
+      ]
+    },
+    "SMALL-CAVE": {
+      "desc": "Cave",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "MIRROR-ROOM-1"
+        },
+        {
+          "dir": "DOWN",
+          "to": "ATLANTIS-ROOM"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "ATLANTIS-ROOM"
+        },
+        {
+          "dir": "WEST",
+          "to": "TWISTING-PASSAGE"
+        }
+      ]
+    },
+    "TINY-CAVE": {
+      "desc": "Cave",
+      "action": "CAVE2-ROOM",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "MIRROR-ROOM-2"
+        },
+        {
+          "dir": "WEST",
+          "to": "WINDING-PASSAGE"
+        },
+        {
+          "dir": "DOWN",
+          "to": "ENTRANCE-TO-HADES"
+        }
+      ]
+    },
+    "COLD-PASSAGE": {
+      "desc": "Cold Passage",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "MIRROR-ROOM-1"
+        },
+        {
+          "dir": "WEST",
+          "to": "SLIDE-ROOM"
+        }
+      ]
+    },
+    "NARROW-PASSAGE": {
+      "desc": "Narrow Passage",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "ROUND-ROOM"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "MIRROR-ROOM-2"
+        }
+      ]
+    },
+    "WINDING-PASSAGE": {
+      "desc": "Winding Passage",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "MIRROR-ROOM-2"
+        },
+        {
+          "dir": "EAST",
+          "to": "TINY-CAVE"
+        }
+      ]
+    },
+    "TWISTING-PASSAGE": {
+      "desc": "Twisting Passage",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "MIRROR-ROOM-1"
+        },
+        {
+          "dir": "EAST",
+          "to": "SMALL-CAVE"
+        }
+      ]
+    },
+    "ATLANTIS-ROOM": {
+      "desc": "Atlantis Room",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "to": "SMALL-CAVE"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "RESERVOIR-NORTH"
+        }
+      ]
+    },
+    "EW-PASSAGE": {
+      "desc": "East-West Passage",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "ROUND-ROOM"
+        },
+        {
+          "dir": "WEST",
+          "to": "TROLL-ROOM"
+        },
+        {
+          "dir": "DOWN",
+          "to": "CHASM-ROOM"
+        },
+        {
+          "dir": "NORTH",
+          "to": "CHASM-ROOM"
+        }
+      ]
+    },
+    "ROUND-ROOM": {
+      "desc": "Round Room",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "LOUD-ROOM"
+        },
+        {
+          "dir": "WEST",
+          "to": "EW-PASSAGE"
+        },
+        {
+          "dir": "NORTH",
+          "to": "NS-PASSAGE"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "NARROW-PASSAGE"
+        },
+        {
+          "dir": "SE",
+          "to": "ENGRAVINGS-CAVE"
+        }
+      ]
+    },
+    "DEEP-CANYON": {
+      "desc": "Deep Canyon",
+      "action": "DEEP-CANYON-F",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "NW",
+          "to": "RESERVOIR-SOUTH"
+        },
+        {
+          "dir": "EAST",
+          "to": "DAM-ROOM"
+        },
+        {
+          "dir": "SW",
+          "to": "NS-PASSAGE"
+        },
+        {
+          "dir": "DOWN",
+          "to": "LOUD-ROOM"
+        }
+      ]
+    },
+    "DAMP-CAVE": {
+      "desc": "Damp Cave",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "CRACK"
+      ],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "LOUD-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "WHITE-CLIFFS-NORTH"
+        },
+        {
+          "dir": "SOUTH",
+          "blocked": "It is too narrow for most insects."
+        }
+      ]
+    },
+    "LOUD-ROOM": {
+      "desc": "Loud Room",
+      "action": "LOUD-ROOM-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "DAMP-CAVE"
+        },
+        {
+          "dir": "WEST",
+          "to": "ROUND-ROOM"
+        },
+        {
+          "dir": "UP",
+          "to": "DEEP-CANYON"
+        }
+      ]
+    },
+    "NS-PASSAGE": {
+      "desc": "North-South Passage",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "CHASM-ROOM"
+        },
+        {
+          "dir": "NE",
+          "to": "DEEP-CANYON"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "ROUND-ROOM"
+        }
+      ]
+    },
+    "CHASM-ROOM": {
+      "desc": "Chasm",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "CRACK",
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "NE",
+          "to": "RESERVOIR-SOUTH"
+        },
+        {
+          "dir": "SW",
+          "to": "EW-PASSAGE"
+        },
+        {
+          "dir": "UP",
+          "to": "EW-PASSAGE"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "NS-PASSAGE"
+        },
+        {
+          "dir": "DOWN",
+          "blocked": "Are you out of your mind?"
+        }
+      ]
+    },
+    "ENTRANCE-TO-HADES": {
+      "desc": "Entrance to Hades",
+      "action": "LLD-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT"
+      ],
+      "globals": [
+        "BODIES"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "to": "TINY-CAVE"
+        },
+        {
+          "dir": "IN",
+          "to": "LAND-OF-LIVING-DEAD",
+          "if": "LLD-FLAG",
+          "else": "Some invisible force prevents you from passing through the gate."
+        },
+        {
+          "dir": "SOUTH",
+          "to": "LAND-OF-LIVING-DEAD",
+          "if": "LLD-FLAG",
+          "else": "Some invisible force prevents you from passing through the gate."
+        }
+      ]
+    },
+    "LAND-OF-LIVING-DEAD": {
+      "desc": "Land of the Dead",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT"
+      ],
+      "globals": [
+        "BODIES"
+      ],
+      "exits": [
+        {
+          "dir": "OUT",
+          "to": "ENTRANCE-TO-HADES"
+        },
+        {
+          "dir": "NORTH",
+          "to": "ENTRANCE-TO-HADES"
+        }
+      ]
+    },
+    "ENGRAVINGS-CAVE": {
+      "desc": "Engravings Cave",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NW",
+          "to": "ROUND-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "DOME-ROOM"
+        }
+      ]
+    },
+    "EGYPT-ROOM": {
+      "desc": "Egyptian Room",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "NORTH-TEMPLE"
+        },
+        {
+          "dir": "UP",
+          "to": "NORTH-TEMPLE"
+        }
+      ]
+    },
+    "DOME-ROOM": {
+      "desc": "Dome Room",
+      "action": "DOME-ROOM-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "ENGRAVINGS-CAVE"
+        },
+        {
+          "dir": "DOWN",
+          "to": "TORCH-ROOM",
+          "if": "DOME-FLAG",
+          "else": "You cannot go down without fracturing many bones."
+        }
+      ]
+    },
+    "TORCH-ROOM": {
+      "desc": "Torch Room",
+      "action": "TORCH-ROOM-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "You cannot reach the rope."
+        },
+        {
+          "dir": "SOUTH",
+          "to": "NORTH-TEMPLE"
+        },
+        {
+          "dir": "DOWN",
+          "to": "NORTH-TEMPLE"
+        }
+      ]
+    },
+    "NORTH-TEMPLE": {
+      "desc": "Temple",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "DOWN",
+          "to": "EGYPT-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "EGYPT-ROOM"
+        },
+        {
+          "dir": "NORTH",
+          "to": "TORCH-ROOM"
+        },
+        {
+          "dir": "OUT",
+          "to": "TORCH-ROOM"
+        },
+        {
+          "dir": "UP",
+          "to": "TORCH-ROOM"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "SOUTH-TEMPLE"
+        }
+      ]
+    },
+    "SOUTH-TEMPLE": {
+      "desc": "Altar",
+      "action": "SOUTH-TEMPLE-FCN",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "NORTH-TEMPLE"
+        },
+        {
+          "dir": "DOWN",
+          "to": "TINY-CAVE",
+          "if": "COFFIN-CURE",
+          "else": "You haven't a prayer of getting the coffin down there."
+        }
+      ]
+    },
+    "DAM-ROOM": {
+      "desc": "Dam",
+      "action": "DAM-ROOM-FCN",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER"
+      ],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "DEEP-CANYON"
+        },
+        {
+          "dir": "DOWN",
+          "to": "DAM-BASE"
+        },
+        {
+          "dir": "EAST",
+          "to": "DAM-BASE"
+        },
+        {
+          "dir": "NORTH",
+          "to": "DAM-LOBBY"
+        },
+        {
+          "dir": "WEST",
+          "to": "RESERVOIR-SOUTH"
+        }
+      ]
+    },
+    "DAM-LOBBY": {
+      "desc": "Dam Lobby",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "DAM-ROOM"
+        },
+        {
+          "dir": "NORTH",
+          "to": "MAINTENANCE-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "MAINTENANCE-ROOM"
+        }
+      ]
+    },
+    "MAINTENANCE-ROOM": {
+      "desc": "Maintenance Room",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "DAM-LOBBY"
+        },
+        {
+          "dir": "WEST",
+          "to": "DAM-LOBBY"
+        }
+      ]
+    },
+    "DAM-BASE": {
+      "desc": "Dam Base",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "DAM-ROOM"
+        },
+        {
+          "dir": "UP",
+          "to": "DAM-ROOM"
+        }
+      ]
+    },
+    "RIVER-1": {
+      "desc": "Frigid River",
+      "flags": [
+        "NONLANDBIT",
+        "SACREDBIT",
+        "ONBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "You cannot go upstream due to strong currents."
+        },
+        {
+          "dir": "WEST",
+          "to": "DAM-BASE"
+        },
+        {
+          "dir": "LAND",
+          "to": "DAM-BASE"
+        },
+        {
+          "dir": "DOWN",
+          "to": "RIVER-2"
+        },
+        {
+          "dir": "EAST",
+          "blocked": "The White Cliffs prevent your landing here."
+        }
+      ]
+    },
+    "RIVER-2": {
+      "desc": "Frigid River",
+      "flags": [
+        "NONLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "You cannot go upstream due to strong currents."
+        },
+        {
+          "dir": "DOWN",
+          "to": "RIVER-3"
+        },
+        {
+          "dir": "LAND",
+          "blocked": "There is no safe landing spot here."
+        },
+        {
+          "dir": "EAST",
+          "blocked": "The White Cliffs prevent your landing here."
+        },
+        {
+          "dir": "WEST",
+          "blocked": "Just in time you steer away from the rocks."
+        }
+      ]
+    },
+    "RIVER-3": {
+      "desc": "Frigid River",
+      "flags": [
+        "NONLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "You cannot go upstream due to strong currents."
+        },
+        {
+          "dir": "DOWN",
+          "to": "RIVER-4"
+        },
+        {
+          "dir": "LAND",
+          "to": "WHITE-CLIFFS-NORTH"
+        },
+        {
+          "dir": "WEST",
+          "to": "WHITE-CLIFFS-NORTH"
+        }
+      ]
+    },
+    "WHITE-CLIFFS-NORTH": {
+      "desc": "White Cliffs Beach",
+      "action": "WHITE-CLIFFS-FUNCTION",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "WHITE-CLIFF",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "WHITE-CLIFFS-SOUTH",
+          "if": "DEFLATE",
+          "else": "The path is too narrow."
+        },
+        {
+          "dir": "WEST",
+          "to": "DAMP-CAVE",
+          "if": "DEFLATE",
+          "else": "The path is too narrow."
+        }
+      ]
+    },
+    "WHITE-CLIFFS-SOUTH": {
+      "desc": "White Cliffs Beach",
+      "action": "WHITE-CLIFFS-FUNCTION",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "WHITE-CLIFF",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "WHITE-CLIFFS-NORTH",
+          "if": "DEFLATE",
+          "else": "The path is too narrow."
+        }
+      ]
+    },
+    "RIVER-4": {
+      "desc": "Frigid River",
+      "action": "RIVR4-ROOM",
+      "flags": [
+        "NONLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "You cannot go upstream due to strong currents."
+        },
+        {
+          "dir": "DOWN",
+          "to": "RIVER-5"
+        },
+        {
+          "dir": "LAND",
+          "blocked": "You can land either to the east or the west."
+        },
+        {
+          "dir": "WEST",
+          "to": "WHITE-CLIFFS-SOUTH"
+        },
+        {
+          "dir": "EAST",
+          "to": "SANDY-BEACH"
+        }
+      ]
+    },
+    "RIVER-5": {
+      "desc": "Frigid River",
+      "flags": [
+        "NONLANDBIT",
+        "SACREDBIT",
+        "ONBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "blocked": "You cannot go upstream due to strong currents."
+        },
+        {
+          "dir": "EAST",
+          "to": "SHORE"
+        },
+        {
+          "dir": "LAND",
+          "to": "SHORE"
+        }
+      ]
+    },
+    "SHORE": {
+      "desc": "Shore",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT",
+        "ONBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "SANDY-BEACH"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "ARAGAIN-FALLS"
+        }
+      ]
+    },
+    "SANDY-BEACH": {
+      "desc": "Sandy Beach",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "NE",
+          "to": "SANDY-CAVE"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "SHORE"
+        }
+      ]
+    },
+    "SANDY-CAVE": {
+      "desc": "Sandy Cave",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SW",
+          "to": "SANDY-BEACH"
+        }
+      ]
+    },
+    "ARAGAIN-FALLS": {
+      "desc": "Aragain Falls",
+      "action": "FALLS-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT",
+        "ONBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RIVER",
+        "RAINBOW"
+      ],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "ON-RAINBOW",
+          "if": "RAINBOW-FLAG"
+        },
+        {
+          "dir": "DOWN",
+          "blocked": "It's a long way..."
+        },
+        {
+          "dir": "NORTH",
+          "to": "SHORE"
+        },
+        {
+          "dir": "UP",
+          "to": "ON-RAINBOW",
+          "if": "RAINBOW-FLAG"
+        }
+      ]
+    },
+    "ON-RAINBOW": {
+      "desc": "On the Rainbow",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "RAINBOW"
+      ],
+      "exits": [
+        {
+          "dir": "WEST",
+          "to": "END-OF-RAINBOW"
+        },
+        {
+          "dir": "EAST",
+          "to": "ARAGAIN-FALLS"
+        }
+      ]
+    },
+    "END-OF-RAINBOW": {
+      "desc": "End of Rainbow",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "RAINBOW",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "to": "ON-RAINBOW",
+          "if": "RAINBOW-FLAG"
+        },
+        {
+          "dir": "NE",
+          "to": "ON-RAINBOW",
+          "if": "RAINBOW-FLAG"
+        },
+        {
+          "dir": "EAST",
+          "to": "ON-RAINBOW",
+          "if": "RAINBOW-FLAG"
+        },
+        {
+          "dir": "SW",
+          "to": "CANYON-BOTTOM"
+        }
+      ]
+    },
+    "CANYON-BOTTOM": {
+      "desc": "Canyon Bottom",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "GLOBAL-WATER",
+        "CLIMBABLE-CLIFF",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "to": "CLIFF-MIDDLE"
+        },
+        {
+          "dir": "NORTH",
+          "to": "END-OF-RAINBOW"
+        }
+      ]
+    },
+    "CLIFF-MIDDLE": {
+      "desc": "Rocky Ledge",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "CLIMBABLE-CLIFF",
+        "RIVER"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "to": "CANYON-VIEW"
+        },
+        {
+          "dir": "DOWN",
+          "to": "CANYON-BOTTOM"
+        }
+      ]
+    },
+    "CANYON-VIEW": {
+      "desc": "Canyon View",
+      "action": "CANYON-VIEW-F",
+      "flags": [
+        "RLANDBIT",
+        "ONBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "CLIMBABLE-CLIFF",
+        "RIVER",
+        "RAINBOW"
+      ],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "CLIFF-MIDDLE"
+        },
+        {
+          "dir": "DOWN",
+          "to": "CLIFF-MIDDLE"
+        },
+        {
+          "dir": "NW",
+          "to": "CLEARING"
+        },
+        {
+          "dir": "WEST",
+          "to": "FOREST-3"
+        },
+        {
+          "dir": "SOUTH",
+          "blocked": "Storm-tossed trees block your way."
+        }
+      ]
+    },
+    "MINE-ENTRANCE": {
+      "desc": "Mine Entrance",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "SLIDE-ROOM"
+        },
+        {
+          "dir": "IN",
+          "to": "SQUEEKY-ROOM"
+        },
+        {
+          "dir": "WEST",
+          "to": "SQUEEKY-ROOM"
+        }
+      ]
+    },
+    "SQUEEKY-ROOM": {
+      "desc": "Squeaky Room",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "BAT-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "MINE-ENTRANCE"
+        }
+      ]
+    },
+    "BAT-ROOM": {
+      "desc": "Bat Room",
+      "action": "BATS-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "SQUEEKY-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "SHAFT-ROOM"
+        }
+      ]
+    },
+    "SHAFT-ROOM": {
+      "desc": "Shaft Room",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "DOWN",
+          "blocked": "You wouldn't fit and would die if you could."
+        },
+        {
+          "dir": "WEST",
+          "to": "BAT-ROOM"
+        },
+        {
+          "dir": "NORTH",
+          "to": "SMELLY-ROOM"
+        }
+      ]
+    },
+    "SMELLY-ROOM": {
+      "desc": "Smelly Room",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "DOWN",
+          "to": "GAS-ROOM"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "SHAFT-ROOM"
+        }
+      ]
+    },
+    "GAS-ROOM": {
+      "desc": "Gas Room",
+      "action": "BOOM-ROOM",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "UP",
+          "to": "SMELLY-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "MINE-1"
+        }
+      ]
+    },
+    "LADDER-TOP": {
+      "desc": "Ladder Top",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "LADDER",
+        "STAIRS"
+      ],
+      "exits": [
+        {
+          "dir": "DOWN",
+          "to": "LADDER-BOTTOM"
+        },
+        {
+          "dir": "UP",
+          "to": "MINE-4"
+        }
+      ]
+    },
+    "LADDER-BOTTOM": {
+      "desc": "Ladder Bottom",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "LADDER"
+      ],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "DEAD-END-5"
+        },
+        {
+          "dir": "WEST",
+          "to": "TIMBER-ROOM"
+        },
+        {
+          "dir": "UP",
+          "to": "LADDER-TOP"
+        }
+      ]
+    },
+    "DEAD-END-5": {
+      "desc": "Dead End",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "LADDER-BOTTOM"
+        }
+      ]
+    },
+    "TIMBER-ROOM": {
+      "desc": "Timber Room",
+      "action": "NO-OBJS",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "LADDER-BOTTOM"
+        },
+        {
+          "dir": "WEST",
+          "to": "LOWER-SHAFT",
+          "if": "EMPTY-HANDED",
+          "else": "You cannot fit through this passage with that load."
+        }
+      ]
+    },
+    "LOWER-SHAFT": {
+      "desc": "Drafty Room",
+      "action": "NO-OBJS",
+      "flags": [
+        "RLANDBIT",
+        "SACREDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "MACHINE-ROOM"
+        },
+        {
+          "dir": "OUT",
+          "to": "TIMBER-ROOM",
+          "if": "EMPTY-HANDED",
+          "else": "You cannot fit through this passage with that load."
+        },
+        {
+          "dir": "EAST",
+          "to": "TIMBER-ROOM",
+          "if": "EMPTY-HANDED",
+          "else": "You cannot fit through this passage with that load."
+        }
+      ]
+    },
+    "MACHINE-ROOM": {
+      "desc": "Machine Room",
+      "action": "MACHINE-ROOM-FCN",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "LOWER-SHAFT"
+        }
+      ]
+    },
+    "MINE-1": {
+      "desc": "Coal Mine",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "GAS-ROOM"
+        },
+        {
+          "dir": "EAST",
+          "to": "MINE-1"
+        },
+        {
+          "dir": "NE",
+          "to": "MINE-2"
+        }
+      ]
+    },
+    "MINE-2": {
+      "desc": "Coal Mine",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "MINE-2"
+        },
+        {
+          "dir": "SOUTH",
+          "to": "MINE-1"
+        },
+        {
+          "dir": "SE",
+          "to": "MINE-3"
+        }
+      ]
+    },
+    "MINE-3": {
+      "desc": "Coal Mine",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "SOUTH",
+          "to": "MINE-3"
+        },
+        {
+          "dir": "SW",
+          "to": "MINE-4"
+        },
+        {
+          "dir": "EAST",
+          "to": "MINE-2"
+        }
+      ]
+    },
+    "MINE-4": {
+      "desc": "Coal Mine",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [],
+      "exits": [
+        {
+          "dir": "NORTH",
+          "to": "MINE-3"
+        },
+        {
+          "dir": "WEST",
+          "to": "MINE-4"
+        },
+        {
+          "dir": "DOWN",
+          "to": "LADDER-TOP"
+        }
+      ]
+    },
+    "SLIDE-ROOM": {
+      "desc": "Slide Room",
+      "flags": [
+        "RLANDBIT"
+      ],
+      "globals": [
+        "SLIDE"
+      ],
+      "exits": [
+        {
+          "dir": "EAST",
+          "to": "COLD-PASSAGE"
+        },
+        {
+          "dir": "NORTH",
+          "to": "MINE-ENTRANCE"
+        },
+        {
+          "dir": "DOWN",
+          "to": "CELLAR"
+        }
+      ]
+    }
+  }
+}
