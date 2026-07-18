@@ -185,12 +185,8 @@ export default class WebGlkOte {
         const win = { id: this.current_input.id }
         this.current_input = null
         this._setInputEnabled(false)
-        // Echo the command into the transcript.
-        const echo = document.createElement('span')
-        echo.className = 'sty_input'
-        echo.textContent = text + '\n'
-        this.bufferEl.appendChild(echo)
-        this._scrollToBottom()
+        // Note: glkapi echoes the entered line into the buffer window itself,
+        // so we must NOT echo it here or the command would appear twice.
         this.send_response('line', win, text)
       }
     })
