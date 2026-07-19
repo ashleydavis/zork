@@ -2,14 +2,23 @@
 
 The **entire, original Zork I** running in your browser and in your terminal —
 powered by Microsoft's MIT-licensed ZIL, compiled to Z-machine bytecode, and
-executed by a TypeScript Z-machine interpreter.
+executed by a Z-machine interpreter in TypeScript/JavaScript.
 
 ▶ **Play in the browser: https://ashleydavis.github.io/zork/**
 
-By [Ashley Davis](https://codecapers.com.au/) — read more on my blog,
+Published by [Ashley Davis](https://codecapers.com.au/) — read more on my blog,
 [codecapers.com.au](https://codecapers.com.au/).
 
 ![Zork I in the browser](docs/screenshot.png)
+
+## 🤖 Built entirely by Claude
+
+Every part of this project was written by **Claude** (Anthropic's AI assistant),
+driven through **Claude Code** — the Z-machine wiring, the terminal (bun) and
+React + MUI browser front-ends, the map extractor, the auto-map and inventory
+panels, autosave/auto-restore, the win celebration, the GitHub Pages pipeline,
+and this README. The human in the loop supplied the ideas, direction, and
+review; Claude did the implementation.
 
 ## What this is
 
@@ -23,9 +32,9 @@ interpreted directly — Infocom's tools compiled it into bytecode for a virtual
 machine called the **Z-machine**. The Microsoft repo ships both the ZIL source
 *and* the compiled result (`COMPILED/zork1.z3`).
 
-This project takes that compiled game and runs it on a **Z-machine interpreter
-written in TypeScript/JavaScript** ([ifvms](https://github.com/curiousdannii/ifvms),
-the engine behind Parchment), wrapped in two front-ends:
+This project takes that compiled game and runs it on a **Z-machine interpreter**
+([ifvms](https://github.com/curiousdannii/ifvms), the engine behind Parchment),
+wrapped in two front-ends:
 
 ```
 zork1.zil            Microsoft's MIT-licensed ZIL source  (game/zork1.zil, for provenance)
@@ -36,8 +45,8 @@ zork1.z3             the compiled game — real Z-machine v3 bytecode  (game/zor
    ▼
 ifvms Z-machine      a TypeScript/JS Z-machine interpreter
    │  driven through the Glk I/O layer (glkapi) by
-   ├── cli/zork.mjs        → terminal front-end (bun)
-   └── web/                → browser front-end (Vite): custom GlkOte terminal UI
+   ├── cli/zork.mjs        → terminal front-end (bun + glkote-term)
+   └── web/                → browser front-end (Vite + React + MUI)
 ```
 
 Because it runs the *actual* compiled game, this is not a re-implementation —
@@ -53,17 +62,6 @@ bun install
 bun run play
 ```
 
-You'll get the classic prompt:
-
-```
-West of House
-You are standing in an open field west of a white house, with a boarded
-front door.
-There is a small mailbox here.
-
->
-```
-
 You can also point it at any other Z-machine v3–8 story file:
 
 ```sh
@@ -74,28 +72,34 @@ bun cli/zork.mjs path/to/other-game.z5
 
 ```sh
 bun install
-bun run dev       # start Vite dev server
-bun run build     # production build → web/dist
+bun run dev       # Vite dev server
+bun run build     # production build → docs/  (served by GitHub Pages)
 bun run preview   # preview the production build
 ```
 
-The web front-end is a self-contained "glass terminal": a status line (the
-Z-machine *grid* window), a scrolling transcript (the *buffer* window), and a
-command input. Save/Restore work in-browser via `localStorage`.
+The web front-end is a **React + MUI** shell around a self-contained "glass
+terminal": a status line (the Z-machine *grid* window), a scrolling transcript
+(the *buffer* window) with the command input inline beneath it. The Z-machine
+engine itself stays vanilla and imperative — React just hosts its DOM and, on
+mobile, relocates the side panels into drawers.
 
-The shell is **React + MUI**, responsive for desktop and mobile, while the
-Z-machine engine stays vanilla and imperative (React just hosts and relocates
-its DOM). Companion features (browser only — the terminal itself is untouched):
+Browser-only companion features (the terminal experience is untouched):
 
-- **Fog-of-war automap** — rooms are drawn as you visit them, with
-  adjacent-but-unexplored rooms shown as dim "?" fog nodes; the current room
-  glows. Desktop: right panel. Mobile: a drawer that slides up from the bottom.
+- **Auto-map** — rooms are drawn as you visit them, with adjacent-but-unexplored
+  rooms shown as dim `?` markers and the current room highlighted. Desktop: a
+  panel on the right. Mobile: a drawer that slides up from the bottom.
 - **Inventory panel** — parsed from the game's own `inventory` output. Desktop:
   under the map. Mobile: a drawer that slides in from the right.
-- **Button bar** — all direction buttons (compass rose + up/down/in/out, with
-  the current room's real exits highlighted), plus Look / Inventory / Restart.
-  Buttons just submit commands; typing still works exactly as before.
-- **About dialog** — links to this repo and the author's blog.
+- **Compass button bar** — the eight compass points arranged as a rose, with
+  up/down stacked in the centre and in/out beneath; the current room's real
+  exits are highlighted. Plus Look / Inventory / Restart. Buttons just submit
+  commands — typing still works exactly as before.
+- **Autosave & auto-restore** — the full interpreter state is snapshotted to
+  `localStorage` after every move (via ifvms' `do_vm_autosave`), and the game,
+  transcript, and explored map are restored automatically when you return.
+  Restart wipes the save and starts fresh.
+- **Right-side nav bar** with links to this repo and the author's blog (an
+  About dialog carries the same links plus credits).
 - **A victory celebration** when you finish the game. 🎉 (There may or may not
   be a secret way to preview it.)
 
@@ -105,7 +109,8 @@ its DOM). Companion features (browser only — the terminal itself is untouched)
 `zork1.z3` was compiled from — into a complete map of all **110 rooms** and
 **352 exits**, capturing normal, conditional (`if: WON-FLAG`), door
 (`if: "TRAP-DOOR IS OPEN"`), blocked (with message) and routine (`per`) exits,
-plus each room's flags, globals, description and action. Regenerate with:
+plus each room's flags, globals, description and action. The browser auto-map
+reads `data/map.json`. Regenerate both with:
 
 ```sh
 bun run map
@@ -113,16 +118,21 @@ bun run map
 
 ## How the browser front-end works
 
-The interesting glue lives in `web/src`:
+The glue lives in `web/src`:
 
+- **`engine.js`** — builds the terminal + map + inventory DOM, fetches
+  `zork1.z3` and `map.json`, and boots the ifvms VM wired to `glkapi`, our
+  display, and dialog (with `do_vm_autosave` enabled).
+- **`App.jsx`** — the React + MUI shell: responsive layout, mobile drawers/FABs,
+  the About dialog, the nav bar, and the win-celebration trigger.
 - **`web-glkote.js`** — a minimal implementation of the
   [GlkOte](https://eblong.com/zarf/glk/glkote/docs.html) display protocol for
-  the DOM. The Z-machine talks Glk; this translates Glk window updates into DOM
-  and turns keystrokes back into Glk input events.
-- **`web-dialog.js`** — a `localStorage`-backed Dialog so SAVE / RESTORE work
-  without a filesystem.
-- **`main.js`** — fetches `zork1.z3`, wires the ifvms VM to `glkapi` + our
-  display, and starts the game.
+  the DOM: translates Glk window updates into DOM, turns input back into Glk
+  events, and saves/restores the transcript for autosave.
+- **`web-dialog.js`** — a `localStorage`-backed Dialog for SAVE / RESTORE and
+  the whole-VM autosave snapshot.
+- **`game-ui.js`** — tracks the current room from the status line + movement,
+  draws the auto-map, renders the compass, and parses the inventory panel.
 
 `glkapi.js` (the shared Glk API library) is loaded as a classic script because
 it predates modules and relies on sloppy-mode globals; everything else is
@@ -130,11 +140,9 @@ bundled by Vite.
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds the Vite app with `bun` and publishes
-`web/dist` to GitHub Pages on every push to the default branch.
-
-> First-time setup: enable Pages once at **Settings → Pages → Source: GitHub
-> Actions**. (The Actions token cannot enable Pages itself.)
+GitHub Pages is configured as **Deploy from a branch → `/docs`**.
+`.github/workflows/deploy.yml` rebuilds the Vite app into `docs/` with `bun` and
+commits it on every push, so the published site always matches the source.
 
 ## Licenses & credits
 
@@ -144,7 +152,8 @@ bundled by Vite.
 - **ifvms** (Z-machine interpreter) and **glkote-term** / **glkapi** — MIT,
   © Dannii Willis and contributors.
   <https://github.com/curiousdannii/ifvms>
-- This project's own code (CLI, web front-end, GlkOte/Dialog shims) — MIT.
+- This project's own code (CLI, React/MUI front-end, GlkOte/Dialog shims, map
+  tooling) — MIT. Written by Claude.
 
 ZORK is a trademark of Infocom / Activision. This is a preservation/education
 project built on officially open-sourced code.

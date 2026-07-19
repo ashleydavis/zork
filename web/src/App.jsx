@@ -90,25 +90,28 @@ export default function App() {
         <Box ref={terminalHost} sx={{ flex: '1 1 auto', minWidth: 0, height: '100%', display: 'flex' }} />
         {!isMobile && (
           <Box sx={{ flex: '0 0 360px', height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{
+              flex: '0 0 auto', display: 'flex', alignItems: 'center', gap: 0.5,
+              px: 1, py: 0.25, background: '#0f2417',
+              borderBottom: '1px solid rgba(51,255,102,0.25)', borderLeft: '1px solid rgba(51,255,102,0.2)',
+            }}>
+              <Typography sx={{ flex: 1, fontFamily: 'monospace', fontWeight: 'bold', color: '#33ff66', letterSpacing: '0.18em', fontSize: '0.78rem', pl: 0.5 }}>
+                ZORK&nbsp;I
+              </Typography>
+              <NavIcons onAbout={() => setAboutOpen(true)} />
+            </Box>
             <Box ref={desktopMapHost} sx={{ flex: '1 1 auto', minHeight: 0, display: 'flex' }} />
             <Box ref={desktopInvHost} sx={{ flex: '0 0 40%', minHeight: 0, display: 'flex', borderTop: '1px solid rgba(51,255,102,0.2)' }} />
           </Box>
         )}
       </Box>
 
-      {/* Top-right: direct GitHub link + About */}
-      <Box sx={{ position: 'fixed', top: 4, right: 6, zIndex: (t) => t.zIndex.drawer + 3, display: 'flex', gap: 0.5 }}>
-        <Tooltip title="Source on GitHub">
-          <IconButton size="small" color="success" component="a" href={REPO_URL} target="_blank" rel="noopener">
-            <GitHubIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="About">
-          <IconButton size="small" color="success" onClick={() => setAboutOpen(true)}>
-            <InfoOutlinedIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-      </Box>
+      {/* Mobile: compact GitHub + About cluster (no right rail on small screens) */}
+      {isMobile && (
+        <Box sx={{ position: 'fixed', top: 4, right: 6, zIndex: (t) => t.zIndex.drawer + 3, display: 'flex', gap: 0.5 }}>
+          <NavIcons onAbout={() => setAboutOpen(true)} />
+        </Box>
+      )}
 
       {isMobile && (
         <>
@@ -146,6 +149,23 @@ export default function App() {
   )
 }
 
+function NavIcons({ onAbout }) {
+  return (
+    <>
+      <Tooltip title="Source on GitHub">
+        <IconButton aria-label="GitHub" size="small" color="success" component="a" href={REPO_URL} target="_blank" rel="noopener">
+          <GitHubIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="About">
+        <IconButton aria-label="About" size="small" color="success" onClick={onAbout}>
+          <InfoOutlinedIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+    </>
+  )
+}
+
 function Puller() {
   return (
     <Box sx={{ py: 1, flex: '0 0 auto', display: 'flex', justifyContent: 'center' }}>
@@ -165,8 +185,11 @@ function AboutDialog({ open, onClose }) {
         <Typography variant="body2" sx={{ mb: 1.5 }}>
           The complete, original <b>Zork I</b> running in your browser. It plays Microsoft's
           MIT-licensed ZIL source — compiled to a Z-machine story file — on a Z-machine
-          interpreter in TypeScript. The fog-of-war map is generated from the game's own
+          interpreter in TypeScript. The auto-map is generated from the game's own
           <code> 1dungeon.zil</code> source.
+        </Typography>
+        <Typography variant="body2" sx={{ mb: 1.5, color: '#9dffbf' }}>
+          🤖 Built entirely by <b>Claude</b> (Anthropic's AI assistant), via Claude Code.
         </Typography>
         <Divider sx={{ my: 1.5, borderColor: 'rgba(51,255,102,0.2)' }} />
         <Typography variant="body2" component="div" sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>

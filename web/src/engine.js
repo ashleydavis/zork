@@ -7,6 +7,7 @@
  */
 
 import ZVM from 'ifvms/src/zvm.js'
+import ZVMDispatch from 'ifvms/src/zvm/dispatch.js'
 import WebGlkOte from './web-glkote.js'
 import WebDialog from './web-dialog.js'
 import GameUI from './game-ui.js'
@@ -91,7 +92,14 @@ export async function createEngine(opts = {}) {
   const url = import.meta.env.BASE_URL + 'zork1.z3'
   const data = new Uint8Array(await (await fetch(url)).arrayBuffer())
   const vm = new ZVM()
-  const options = { vm, Dialog: WebDialog, Glk, GlkOte: glkote }
+  const options = {
+    vm,
+    Dialog: WebDialog,
+    Glk,
+    GlkOte: glkote,
+    GiDispa: new ZVMDispatch(), // required for autosave
+    do_vm_autosave: true, // snapshot after every move; auto-restore on return
+  }
   vm.prepare(data, options)
   Glk.init(options)
 

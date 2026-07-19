@@ -1,7 +1,7 @@
 /*
  * GameUI — browser-only companion UI for the Zork terminal:
  *
- *  1. A fog-of-war automap (right panel): rooms are drawn as you visit them;
+ *  1. An auto-map (right panel): rooms are drawn as you visit them;
  *     adjacent-but-unvisited rooms appear as dim "?" fog nodes.
  *  2. A button bar (below the input): one button per available exit from the
  *     current room, plus Look / Inventory. Buttons just submit commands.
@@ -42,10 +42,11 @@ const DIR_LABEL = {
   UP: '⤴ Up', DOWN: '⤵ Down', IN: '⊙ In', OUT: '⊗ Out', LAND: '⊕ Land',
 }
 
-// Fixed button layout: compass rose on the top row (clockwise from North),
-// vertical / portal moves on the bottom row.
-const COMPASS = ['NORTH', 'NE', 'EAST', 'SE', 'SOUTH', 'SW', 'WEST', 'NW']
-const VERTICAL = ['UP', 'DOWN', 'IN', 'OUT']
+// Short labels used inside the compass rose (position implies direction).
+const COMPASS_LABEL = {
+  NORTH: 'N', NE: 'NE', EAST: 'E', SE: 'SE', SOUTH: 'S', SW: 'SW', WEST: 'W', NW: 'NW',
+  UP: '▲', DOWN: '▼', IN: 'In', OUT: 'Out',
+}
 
 const CELL_W = 96
 const CELL_H = 62
@@ -84,8 +85,35 @@ export default class GameUI {
       if (counts.get(k) === 1) this.descIndex.set(k, id)
     }
 
+    this._load() // restore explored map from a previous session, if any
     this._addFrontier(this.currentId)
     this.render()
+  }
+
+  _load() {
+    try {
+      const s = localStorage.getItem('zork1:mapstate')
+      if (!s) return
+      const d = JSON.parse(s)
+      if (!d || !d.placed) return
+      this.currentId = d.currentId
+      this.lastLoc = d.lastLoc ?? null
+      this.visited = new Set(d.visited)
+      this.placed = new Map(d.placed)
+      this.frontier = new Map(d.frontier)
+    } catch { /* ignore corrupt state */ }
+  }
+
+  _persist() {
+    try {
+      localStorage.setItem('zork1:mapstate', JSON.stringify({
+        currentId: this.currentId,
+        lastLoc: this.lastLoc,
+        visited: [...this.visited],
+        placed: [...this.placed],
+        frontier: [...this.frontier],
+      }))
+    } catch { /* ignore */ }
   }
 
   // ---- observers wired from WebGlkOte -------------------------------------
@@ -231,6 +259,7 @@ export default class GameUI {
   render() {
     this._renderMap()
     this._renderButtons()
+    this._persist()
   }
 
   _label(id) {
@@ -339,21 +368,28 @@ export default class GameUI {
     const avail = new Set()
     if (room) for (const e of room.exits) if (e.to || e.per) avail.add(e.dir)
 
-    // Left column: all direction buttons, always shown, in two fixed rows.
     const dirs = document.createElement('div')
     dirs.className = 'btn-col btn-dirs'
-    const mkRow = (list) => {
-      const row = document.createElement('div')
-      row.className = 'btn-row'
-      for (const d of list) {
-        row.appendChild(this._button(DIR_LABEL[d] || d,
-          () => this.submit(DIR_COMMAND[d] || d.toLowerCase()),
-          'btn-dir ' + (avail.has(d) ? 'btn-avail' : 'btn-off')))
-      }
-      return row
+
+    // Compass rose: 8 points in a 3x3 grid, with Up/Down stacked in the centre.
+    const compass = document.createElement('div')
+    compass.className = 'compass'
+    const center = document.createElement('div')
+    center.className = 'compass-center'
+    center.appendChild(this._dirBtn('UP', avail, 'mini'))
+    center.appendChild(this._dirBtn('DOWN', avail, 'mini'))
+    const layout = ['NW', 'NORTH', 'NE', 'WEST', center, 'EAST', 'SW', 'SOUTH', 'SE']
+    for (const cell of layout) {
+      compass.appendChild(cell === center ? center : this._dirBtn(cell, avail))
     }
-    dirs.appendChild(mkRow(COMPASS))
-    dirs.appendChild(mkRow(VERTICAL))
+    dirs.appendChild(compass)
+
+    // In / Out as a portal pair beneath the compass.
+    const io = document.createElement('div')
+    io.className = 'btn-io'
+    io.appendChild(this._dirBtn('IN', avail))
+    io.appendChild(this._dirBtn('OUT', avail))
+    dirs.appendChild(io)
 
     // Right column: other actions.
     const actions = document.createElement('div')
@@ -364,6 +400,14 @@ export default class GameUI {
 
     el.appendChild(dirs)
     el.appendChild(actions)
+  }
+
+  _dirBtn(d, avail, extra) {
+    return this._button(
+      COMPASS_LABEL[d] || d,
+      () => this.submit(DIR_COMMAND[d] || d.toLowerCase()),
+      'btn-dir ' + (avail.has(d) ? 'btn-avail' : 'btn-off') + (extra ? ' btn-' + extra : ''),
+    )
   }
 
   _restart() {

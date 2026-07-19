@@ -83,6 +83,14 @@ export default class WebGlkOte {
     if (data.gen <= this.generation && this.generation !== 0) { /* allow */ }
     this.generation = data.gen
 
+    // Auto-restore: on the first update after a restored session, glkapi hands
+    // back the display state we saved, so we can rebuild the transcript.
+    if (data.autorestore) {
+      if (data.autorestore.buffer != null) this.bufferEl.innerHTML = data.autorestore.buffer
+      if (data.autorestore.status != null) this.statusEl.textContent = data.autorestore.status
+      this._scrollToBottom()
+    }
+
     if (data.input != null) this.cancel_inputs(data.input)
     if (data.windows != null) this.update_windows(data.windows)
     if (data.content != null && data.content.length) this.update_content(data.content)
@@ -298,4 +306,12 @@ export default class WebGlkOte {
   log() {}
   warning() {}
   error(msg) { throw msg }
+
+  // Persisted with the VM autosave so the transcript survives a reload.
+  save_allstate() {
+    return {
+      buffer: this.bufferEl ? this.bufferEl.innerHTML : '',
+      status: this.statusEl ? this.statusEl.textContent : '',
+    }
+  }
 }

@@ -65,6 +65,31 @@ const WebDialog = {
     try { localStorage.setItem(keyFor(ref), bytesToB64(bytes)) } catch {}
     return true
   },
+
+  // ---- autosave (whole-VM snapshot, JSONable) ----------------------------
+
+  autosave_read(signature) {
+    try {
+      const s = localStorage.getItem('zork1:autosave:' + signature)
+      return s ? JSON.parse(s) : null
+    } catch { return null }
+  },
+
+  autosave_write(signature, snapshot) {
+    const key = 'zork1:autosave:' + signature
+    try {
+      if (snapshot == null) {
+        localStorage.removeItem(key)
+        // Autosave cleared (quit / game over) — keep the map state in sync.
+        localStorage.removeItem('zork1:mapstate')
+      } else {
+        localStorage.setItem(key, JSON.stringify(snapshot))
+      }
+    } catch (e) {
+      // Storage full / serialization issue — drop autosave rather than crash.
+      try { localStorage.removeItem(key) } catch { /* ignore */ }
+    }
+  },
 }
 
 export default WebDialog
