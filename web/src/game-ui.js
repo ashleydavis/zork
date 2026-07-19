@@ -42,18 +42,26 @@ const DIR_LABEL = {
   UP: '⤴ Up', DOWN: '⤵ Down', IN: '⊙ In', OUT: '⊗ Out', LAND: '⊕ Land',
 }
 
+// Fixed button layout: compass rose on the top row (clockwise from North),
+// vertical / portal moves on the bottom row.
+const COMPASS = ['NORTH', 'NE', 'EAST', 'SE', 'SOUTH', 'SW', 'WEST', 'NW']
+const VERTICAL = ['UP', 'DOWN', 'IN', 'OUT']
+
 const CELL_W = 96
 const CELL_H = 62
 const BOX_W = 78
 const BOX_H = 34
 
 export default class GameUI {
-  constructor({ map, svg, buttons, input }) {
+  constructor({ map, svg, buttons, input, buffer, inventory }) {
     this.map = map
     this.rooms = map.rooms
     this.svg = svg
     this.buttonsEl = buttons
     this.inputEl = input
+    this.bufferEl = buffer
+    this.invEl = inventory
+    this.wantInventory = false
 
     this.currentId = map.start
     this.visited = new Set([this.currentId])
@@ -83,7 +91,57 @@ export default class GameUI {
   // ---- observers wired from WebGlkOte -------------------------------------
 
   handleCommand(text) {
+    const t = String(text).toLowerCase().trim()
+    if (/^(i|inv|invent|inventory)$/.test(t)) this.wantInventory = true
     this.pendingDir = this._parseDir(text)
+  }
+
+  handleOutput() {
+    if (!this.wantInventory) return
+    this.wantInventory = false
+    if (!this.bufferEl || !this.invEl) return
+    const inv = this._parseInventory(this.bufferEl.innerText || this.bufferEl.textContent || '')
+    if (inv) this._renderInventory(inv)
+  }
+
+  _parseInventory(text) {
+    // Find the most recent inventory response and read its item lines.
+    const re = /You are (?:carrying|holding)[:.]?|You are empty[- ]handed\.?|You have nothing/gi
+    let m, last = null
+    while ((m = re.exec(text))) last = m
+    if (!last) return null
+    const seg = text.slice(last.index)
+    const lines = seg.split('\n')
+    const header = lines[0].trim()
+    const empty = /empty[- ]handed|have nothing/i.test(header)
+    const items = []
+    if (!empty) {
+      for (let i = 1; i < lines.length; i++) {
+        const t = lines[i].replace(/\s+$/, '')
+        if (t.trim() === '' || t.trim().startsWith('>')) break
+        items.push(t.replace(/^\s*[-*]?\s*/, '')) // keep nesting-ish indent stripped
+      }
+    }
+    return { header, items, empty }
+  }
+
+  _renderInventory(inv) {
+    const el = this.invEl
+    el.innerHTML = ''
+    const h = document.createElement('div')
+    h.className = 'inv-header'
+    h.textContent = inv.header || 'You are carrying:'
+    el.appendChild(h)
+    if (inv.items.length) {
+      const ul = document.createElement('ul')
+      ul.className = 'inv-items'
+      for (const it of inv.items) {
+        const li = document.createElement('li')
+        li.textContent = it
+        ul.appendChild(li)
+      }
+      el.appendChild(ul)
+    }
   }
 
   handleStatus(loc) {
@@ -275,32 +333,57 @@ export default class GameUI {
   _renderButtons() {
     const el = this.buttonsEl
     el.innerHTML = ''
+
+    // Which directions are actual exits from the current room (to highlight).
     const room = this.rooms[this.currentId]
-    const seen = new Set()
-    if (room) {
-      for (const e of room.exits) {
-        // Actionable exits: those that lead somewhere (to / per / conditional).
-        if (e.blocked != null && !e.to && !e.per) continue
-        if (seen.has(e.dir)) continue
-        seen.add(e.dir)
-        el.appendChild(this._button(DIR_LABEL[e.dir] || e.dir, DIR_COMMAND[e.dir] || e.dir.toLowerCase(),
-          this.frontier.has(e.to) || !this.visited.has(e.to) ? 'btn-explore' : ''))
+    const avail = new Set()
+    if (room) for (const e of room.exits) if (e.to || e.per) avail.add(e.dir)
+
+    // Left column: all direction buttons, always shown, in two fixed rows.
+    const dirs = document.createElement('div')
+    dirs.className = 'btn-col btn-dirs'
+    const mkRow = (list) => {
+      const row = document.createElement('div')
+      row.className = 'btn-row'
+      for (const d of list) {
+        row.appendChild(this._button(DIR_LABEL[d] || d,
+          () => this.submit(DIR_COMMAND[d] || d.toLowerCase()),
+          'btn-dir ' + (avail.has(d) ? 'btn-avail' : 'btn-off')))
       }
+      return row
     }
-    const sep = document.createElement('span')
-    sep.className = 'btn-sep'
-    el.appendChild(sep)
-    el.appendChild(this._button('👁 Look', 'look'))
-    el.appendChild(this._button('🎒 Inventory', 'inventory'))
+    dirs.appendChild(mkRow(COMPASS))
+    dirs.appendChild(mkRow(VERTICAL))
+
+    // Right column: other actions.
+    const actions = document.createElement('div')
+    actions.className = 'btn-col btn-actions'
+    actions.appendChild(this._button('👁 Look', () => this.submit('look')))
+    actions.appendChild(this._button('🎒 Inventory', () => this.submit('inventory')))
+    actions.appendChild(this._button('↻ Restart', () => this._restart(), 'btn-restart'))
+
+    el.appendChild(dirs)
+    el.appendChild(actions)
   }
 
-  _button(label, command, cls) {
+  _restart() {
+    if (typeof confirm === 'function' &&
+        !confirm('Restart Zork from the beginning? This erases your saved game.')) return
+    try {
+      Object.keys(localStorage)
+        .filter((k) => k.startsWith('zork1:'))
+        .forEach((k) => localStorage.removeItem(k))
+    } catch { /* ignore */ }
+    location.reload()
+  }
+
+  _button(label, onClick, cls) {
     const b = document.createElement('button')
     b.type = 'button'
     b.className = 'gbtn ' + (cls || '')
     b.textContent = label
     b.addEventListener('click', () => {
-      this.submit(command)
+      onClick()
       this.inputEl.focus()
     })
     return b

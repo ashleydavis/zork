@@ -15,11 +15,18 @@
     "map": "bun tools/zil-to-yaml.mjs tools/1dungeon.zil"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.2.0",
+    "@mui/material": "^9.2.0",
     "glkote-term": "^0.4.4",
     "ifvms": "^1.1.6",
-    "mute-stream": "^4.0.0"
+    "mute-stream": "^4.0.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.3",
     "playwright": "^1.61.1",
     "vite": "^8.1.5"
   }

@@ -31,6 +31,8 @@ export default class WebGlkOte {
     // Optional observers (used by the automap + button bar). Assigned by main.
     this.onCommand = null // (text) => void   when the player submits a line
     this.onStatus = null // (location) => void when the status line changes
+    this.onOutput = null // () => void        after each screen update completes
+    this.onScore = null // (score) => void    when the status-line score changes
 
     this._wireInput()
   }
@@ -88,6 +90,7 @@ export default class WebGlkOte {
 
     this.disable(!!(data.disabled || data.specialinput))
     if (data.specialinput != null) this.accept_specialinput(data.specialinput)
+    if (this.onOutput) this.onOutput()
     if (data.type === 'exit') this.exit()
   }
 
@@ -121,6 +124,10 @@ export default class WebGlkOte {
       // Location is the left-justified part before the score/turns columns.
       const loc = line.replace(/\s{2,}.*$/, '').trim()
       if (loc && this.onStatus) this.onStatus(loc)
+      if (this.onScore) {
+        const m = line.match(/Score:\s*(-?\d+)/i)
+        if (m) this.onScore(parseInt(m[1], 10))
+      }
     }
   }
 
@@ -142,6 +149,19 @@ export default class WebGlkOte {
         this.bufferEl.appendChild(span)
       }
     })
+  }
+
+  _stripTrailingPrompt() {
+    // Remove a trailing ">" (with any spaces) from the end of the transcript,
+    // keeping preceding newlines. Called when line input is requested.
+    let node = this.bufferEl.lastChild
+    while (node && node.textContent === '') { const p = node.previousSibling; this.bufferEl.removeChild(node); node = p }
+    if (!node) return
+    const m = node.textContent.match(/>[ \t]*$/)
+    if (m) {
+      node.textContent = node.textContent.slice(0, m.index)
+      if (node.textContent === '') this.bufferEl.removeChild(node)
+    }
   }
 
   _runsToText(runs) {
@@ -166,6 +186,9 @@ export default class WebGlkOte {
     const req = inputs[0]
     this.current_input = { id: req.id, type: req.type }
     if (req.type === 'line') {
+      // The game prints a ">" prompt while it waits for input; we show a fixed
+      // input line instead, so strip that dangling prompt from the transcript.
+      this._stripTrailingPrompt()
       this._setInputEnabled(true)
       this.inputEl.focus()
     } else if (req.type === 'char') {
@@ -196,8 +219,13 @@ export default class WebGlkOte {
         this.current_input = null
         this._setInputEnabled(false)
         if (this.onCommand) this.onCommand(text)
-        // Note: glkapi echoes the entered line into the buffer window itself,
-        // so we must NOT echo it here or the command would appear twice.
+        // We stripped the game's ">" prompt, so re-add one for the echoed
+        // command. glkapi appends the entered line to this same line, giving
+        // the classic ">command" in the transcript.
+        const p = document.createElement('span')
+        p.className = 'sty_prompt'
+        p.textContent = '>'
+        this.bufferEl.appendChild(p)
         this.send_response('line', win, text)
       }
     })

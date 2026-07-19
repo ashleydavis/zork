@@ -6,6 +6,9 @@ executed by a TypeScript Z-machine interpreter.
 
 ▶ **Play in the browser: https://ashleydavis.github.io/zork/**
 
+By [Ashley Davis](https://codecapers.com.au/) — read more on my blog,
+[codecapers.com.au](https://codecapers.com.au/).
+
 ![Zork I in the browser](docs/screenshot.png)
 
 ## What this is
@@ -80,15 +83,21 @@ The web front-end is a self-contained "glass terminal": a status line (the
 Z-machine *grid* window), a scrolling transcript (the *buffer* window), and a
 command input. Save/Restore work in-browser via `localStorage`.
 
-It also has two companion features (browser only — the terminal is untouched):
+The shell is **React + MUI**, responsive for desktop and mobile, while the
+Z-machine engine stays vanilla and imperative (React just hosts and relocates
+its DOM). Companion features (browser only — the terminal itself is untouched):
 
-- **Fog-of-war automap** (right panel) — rooms are drawn as you visit them, with
-  adjacent-but-unexplored rooms shown as dim "?" fog nodes. Current room glows.
-  Driven by the status line + your movement commands, resolved against
-  `data/map.json` (see below).
-- **Button bar** (below the input) — one button per available exit from the
-  current room, plus Look / Inventory. Buttons just submit commands; typing
-  still works exactly as before.
+- **Fog-of-war automap** — rooms are drawn as you visit them, with
+  adjacent-but-unexplored rooms shown as dim "?" fog nodes; the current room
+  glows. Desktop: right panel. Mobile: a drawer that slides up from the bottom.
+- **Inventory panel** — parsed from the game's own `inventory` output. Desktop:
+  under the map. Mobile: a drawer that slides in from the right.
+- **Button bar** — all direction buttons (compass rose + up/down/in/out, with
+  the current room's real exits highlighted), plus Look / Inventory / Restart.
+  Buttons just submit commands; typing still works exactly as before.
+- **About dialog** — links to this repo and the author's blog.
+- **A victory celebration** when you finish the game. 🎉 (There may or may not
+  be a secret way to preview it.)
 
 ## The map (`data/map.yaml` / `data/map.json`)
 
